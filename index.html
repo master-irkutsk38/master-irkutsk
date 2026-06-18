@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мастер на час в Иркутске — Современный сервис</title>
+    <!-- Иконки Remixicon -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+    <!-- AOS Animation CSS -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Типографика */
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .section-subtitle {
+            color: #ffe484;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+        .text-center {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        /* Кнопки */
+        .btn {
+            display: inline-block;
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            border: none;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .btn-primary {
+            background: #ffffff;
+            color: #764ba2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            background: #f8f9fa;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+        }
+        .btn-outline:hover {
+            background: #ffffff;
+            color: #764ba2;
+        }
+        /* Анимация пульсации для кнопки экстренного вызова */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        /* Шапка */
+        header {
+            padding: 20px 0;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #fff;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .logo span {
+            color: #ffe484;
+        }
+        .header-contacts {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        .header-phone a, .header-email a {
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+        }
+        .header-phone a i, .header-email a i {
+            font-size: 1.3rem;
+            color: #ffe484;
+        }
+        .header-phone a:hover, .header-email a:hover {
+            color: #ffe484;
+        }
+        /* Герой */
+        .hero {
+            padding: 70px 0;
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+        }
+        .hero-content {
+            flex: 1;
+            min-width: 280px;
+        }
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        .hero-content p {
+            font-size: 1.25rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+        }
+        .hero-image {
+            flex: 1;
+            min-width: 280px;
+            text-align: center;
+        }
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 2px solid rgba(255,255,255,0.3);
+            transition: transform 0.5s ease;
+        }
+        .hero-image img:hover {
+            transform: scale(1.02);
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            color: #fff;
+            padding: 8px 22px;
+            border-radius: 50px;
+            margin-bottom: 18px;
+            font-weight: 500;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        .badge i {
+            margin-right: 8px;
+            color: #ffe484;
+        }
+        /* Преимущества */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 70px 0;
+            margin: 40px 0;
+        }
+        .feature-item {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 24px;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.25);
+            transition: all 0.4s ease;
+        }
+        .feature-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.2);
+        }
+        .feature-icon {
+            font-size: 2.8rem;
+            color: #ffe484;
+            margin-bottom: 18px;
+            transition: transform 0.3s;
+        }
+        .feature-item:hover .feature-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+        .feature-item h3 {
+            color: #fff;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+        .feature-item p {
+            color: rgba(255,255,255,0.8);
+        }
+        /* Тарифы */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+        .pricing-card {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 30px;
+            padding: 40px 30px;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 40px rgba(0,0,0,0.3);
+            background: rgba(255,255,255,0.25);
+        }
+        .pricing-card.popular {
+            background: rgba(255,255,255,0.25);
+            border: 2px solid #ffe484;
+        }
+        .popular-badge {
+            position: absolute;
+            top: -14px;
+            right: 25px;
+            background: #ffe484;
+            color: #764ba2;
+            padding: 6px 20px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        .pricing-header h3 {
+            font-size: 1.7rem;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+        .pricing-header .price {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #ffe484;
+            margin: 20px 0;
+        }
+        .pricing-features {
+            list-style: none;
+            margin: 25px 0;
+        }
+        .pricing-features li {
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            color: rgba(255,255,255,0.9);
+        }
+        .pricing-features li i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            color: #ffe484;
+        }
+        .pricing-features li i.ri-close-line {
+            color: rgba(255,255,255,0.4);
+        }
+        /* Таблицы */
+        .details-section {
+            padding: 70px 0;
+        }
+        .category-block {
+            margin-bottom: 45px;
+        }
+        .category-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 20px;
+            padding-left: 20px;
+            border-left: 5px solid #ffe484;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.25);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 18px 22px;
+            text-align: left;
+        }
+        th {
+            background: rgba(255,255,255,0.2);
+            color: #ffe484;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+        }
+        tr {
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        tr:last-child {
+            border-bottom: none;
+        }
+        tr:hover {
+            background: rgba(255,255,255,0.2);
+        }
+        .price-cell {
+            font-weight: 700;
+            color: #ffe484;
+            text-align: right;
+        }
+        /* Контакты */
+        .contact-section {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 35px;
+            padding: 55px 40px;
+            text-align: center;
+            margin: 60px 0;
+        }
+        .big-phone {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #ffe484;
+            text-decoration: none;
+            display: block;
+            margin: 20px 0 10px;
+        }
+        .email-link {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            border-bottom: 1px dashed #ffe484;
+            transition: 0.3s;
+        }
+        .email-link:hover {
+            color: #ffe484;
+        }
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: rgba(255,255,255,0.7);
+            border-top: 1px solid rgba(255,255,255,0.2);
+            font-size: 0.9rem;
+        }
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.4rem;
+            }
+            .header-inner {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .contact-section {
+                padding: 35px 20px;
+            }
+            .big-phone {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container header-inner">
+            <div class="logo">Мастер<span>+</span></div>
+            <div class="header-contacts">
+                <div class="header-phone">
+                    <a href="tel:+79246172221"><i class="ri-smartphone-line"></i> 8 (924) 617-22-21</a>
+                </div>
+                <div class="header-email">
+                    <a href="mailto:andrejarcev87344@gmail.com"><i class="ri-mail-send-line"></i> andrejarcev87344@gmail.com</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="hero-content" data-aos="fade-right">
+                <div class="badge"><i class="ri-verified-badge-line"></i> Гарантия до 12 месяцев</div>
+                <h1>Муж на час <br>в Иркутске</h1>
+                <p>Быстро, чисто, с гарантией. Приедем за 30 минут в любую точку города.</p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                    <a href="#pricing" class="btn btn-primary">Смотреть расценки</a>
+                    <a href="tel:+79246172221" class="btn btn-outline pulse"><i class="ri-phone-line"></i> Экстренный вызов</a>
+                </div>
+            </div>
+            <div class="hero-image" data-aos="fade-left">
+                <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?q=80&w=600&auto=format&fit=crop" alt="Мастер в Иркутске">
+            </div>
+        </section>
+
+        <div class="features">
+            <div class="feature-item" data-aos="zoom-in-up" data-aos-delay="100">
+                <div class="feature-icon"><i class="ri-speed-up-line"></i></div>
+                <h3>Приезд от 30 минут</h3>
+                <p>По всему Иркутску</p>
+            </div>
+            <div class="feature-item" data-aos="zoom-in-up" data-aos-delay="200">
+                <div class="feature-icon"><i class="ri-tools-fill"></i></div>
+                <h3>Профессиональный инструмент</h3>
+                <p>Всё с собой</p>
+            </div>
+            <div class="feature-item" data-aos="zoom-in-up" data-aos-delay="300">
+                <div class="feature-icon"><i class="ri-money-dollar-circle-line"></i></div>
+                <h3>Честная цена</h3>
+                <p>Без скрытых платежей</p>
+            </div>
+            <div class="feature-item" data-aos="zoom-in-up" data-aos-delay="400">
+                <div class="feature-icon"><i class="ri-user-star-line"></i></div>
+                <h3>Опытные мастера</h3>
+                <p>Вежливые, трезвые</p>
+            </div>
+        </div>
+
+        <section id="pricing">
+            <div class="text-center" data-aos="fade-up">
+                <p class="section-subtitle">Выгодные пакеты</p>
+                <h2 class="section-title">Выберите тариф</h2>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card" data-aos="flip-left" data-aos-delay="100">
+                    <div class="pricing-header">
+                        <h3>«Базовый»</h3>
+                        <p style="color: rgba(255,255,255,0.7);">Мелкий ремонт</p>
+                        <div class="price">1 500 <span style="font-size: 1rem;">₽</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="ri-check-line"></i> Вызов включён</li>
+                        <li><i class="ri-check-line"></i> До 1 часа работы</li>
+                        <li><i class="ri-check-line"></i> Картины, полки, розетки</li>
+                        <li><i class="ri-close-line"></i> Сложный электромонтаж</li>
+                    </ul>
+                    <a href="tel:+79246172221" class="btn btn-outline" style="width:100%;">Заказать</a>
+                </div>
+
+                <div class="pricing-card popular" data-aos="flip-left" data-aos-delay="200">
+                    <div class="popular-badge">ХИТ</div>
+                    <div class="pricing-header">
+                        <h3>«Универсальный»</h3>
+                        <p style="color: rgba(255,255,255,0.7);">Для дома и офиса</p>
+                        <div class="price">2 900 <span style="font-size: 1rem;">₽</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="ri-check-line"></i> Выезд бесплатно</li>
+                        <li><i class="ri-check-line"></i> До 2 часов</li>
+                        <li><i class="ri-check-line"></i> Люстры, смесители, мебель</li>
+                        <li><i class="ri-close-line"></i> Гипсокартон</li>
+                    </ul>
+                    <a href="tel:+79246172221" class="btn btn-primary" style="width:100%;">Заказать</a>
+                </div>
+
+                <div class="pricing-card" data-aos="flip-left" data-aos-delay="300">
+                    <div class="pricing-header">
+                        <h3>«Комплексный»</h3>
+                        <p style="color: rgba(255,255,255,0.7);">Ремонт под ключ</p>
+                        <div class="price">5 500 <span style="font-size: 1rem;">₽</span></div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class="ri-check-line"></i> Выезд и диагностика</li>
+                        <li><i class="ri-check-line"></i> До 4 часов</li>
+                        <li><i class="ri-check-line"></i> Сборка, электрика, сантехника</li>
+                        <li><i class="ri-check-line"></i> Гипсокартон, ламинат</li>
+                    </ul>
+                    <a href="tel:+79246172221" class="btn btn-outline" style="width:100%;">Заказать</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="details-section">
+            <div class="text-center" data-aos="fade-up">
+                <p class="section-subtitle">Цены на услуги</p>
+                <h2 class="section-title">Развёрнутый прайс</h2>
+            </div>
+
+            <div class="category-block" data-aos="fade-up">
+                <h3 class="category-title"><i class="ri-bolt-line"></i> Электрика</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Услуга</th><th>Время</th><th>Цена</th></tr></thead>
+                        <tbody>
+                            <tr><td>Замена / установка люстры</td><td>20-40 мин</td><td class="price-cell">от 800 ₽</td></tr>
+                            <tr><td>Розетка / выключатель</td><td>15 мин</td><td class="price-cell">от 400 ₽</td></tr>
+                            <tr><td>Дополнительная розетка</td><td>30-50 мин</td><td class="price-cell">от 1 200 ₽</td></tr>
+                            <tr><td>Точечный светильник</td><td>20 мин</td><td class="price-cell">от 500 ₽</td></tr>
+                            <tr><td>Прокладка кабеля (метр)</td><td>—</td><td class="price-cell">от 150 ₽</td></tr>
+                            <tr><td>Автомат в щитке</td><td>20 мин</td><td class="price-cell">от 600 ₽</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="category-block" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="category-title"><i class="ri-drop-line"></i> Сантехника</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Услуга</th><th>Время</th><th>Цена</th></tr></thead>
+                        <tbody>
+                            <tr><td>Установка смесителя</td><td>30-50 мин</td><td class="price-cell">от 1 200 ₽</td></tr>
+                            <tr><td>Сифон / гофра</td><td>20 мин</td><td class="price-cell">от 600 ₽</td></tr>
+                            <tr><td>Унитаз</td><td>1-2 ч</td><td class="price-cell">от 2 500 ₽</td></tr>
+                            <tr><td>Прочистка засора</td><td>30-60 мин</td><td class="price-cell">от 1 500 ₽</td></tr>
+                            <tr><td>Устранение течи</td><td>15-30 мин</td><td class="price-cell">от 500 ₽</td></tr>
+                            <tr><td>Полотенцесушитель</td><td>1-2 ч</td><td class="price-cell">от 2 200 ₽</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="category-block" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="category-title"><i class="ri-hammer-line"></i> Мебель</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Услуга</th><th>Время</th><th>Цена</th></tr></thead>
+                        <tbody>
+                            <tr><td>Сборка тумбы / комода</td><td>30-60 мин</td><td class="price-cell">от 1 500 ₽</td></tr>
+                            <tr><td>Шкаф-купе</td><td>2-4 ч</td><td class="price-cell">от 4 000 ₽</td></tr>
+                            <tr><td>Кухонный модуль</td><td>—</td><td class="price-cell">от 800 ₽</td></tr>
+                            <tr><td>Регулировка дверей</td><td>20-40 мин</td><td class="price-cell">от 700 ₽</td></tr>
+                            <tr><td>Замена столешницы</td><td>1-2 ч</td><td class="price-cell">от 2 000 ₽</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="category-block" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="category-title"><i class="ri-brush-line"></i> Бытовой ремонт</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Услуга</th><th>Время</th><th>Цена</th></tr></thead>
+                        <tbody>
+                            <tr><td>Картина / зеркало / полка</td><td>15-30 мин</td><td class="price-cell">от 400 ₽</td></tr>
+                            <tr><td>Карниз / жалюзи</td><td>20-30 мин</td><td class="price-cell">от 700 ₽</td></tr>
+                            <tr><td>Дверной замок</td><td>30-50 мин</td><td class="price-cell">от 1 000 ₽</td></tr>
+                            <tr><td>Герметизация швов</td><td>30 мин</td><td class="price-cell">от 800 ₽</td></tr>
+                            <tr><td>Плинтус (метр)</td><td>—</td><td class="price-cell">от 200 ₽</td></tr>
+                            <tr><td>Крючки, вешалки</td><td>15-20 мин</td><td class="price-cell">от 500 ₽</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="contact-section" data-aos="zoom-in">
+            <i class="ri-customer-service-2-fill" style="font-size: 3rem; color: #ffe484;"></i>
+            <h2>Вызвать мастера сейчас</h2>
+            <p style="color: rgba(255,255,255,0.8);">Приедем в течение часа по Иркутску</p>
+            <a href="tel:+79246172221" class="big-phone">8 (924) 617-22-21</a>
+            <a href="mailto:andrejarcev87344@gmail.com" class="email-link">andrejarcev87344@gmail.com</a>
+            <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
+                <a href="tel:+79246172221" class="btn btn-primary"><i class="ri-phone-line"></i> Позвонить</a>
+                <a href="mailto:andrejarcev87344@gmail.com" class="btn btn-outline"><i class="ri-mail-send-line"></i> Написать</a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© 2024 Мастер+. Иркутск, работаем с 8:00 до 22:00 без выходных.</p>
+        </div>
+    </footer>
+
+    <!-- AOS Animation JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true,
+            offset: 100
+        });
+    </script>
+</body>
+</html>
