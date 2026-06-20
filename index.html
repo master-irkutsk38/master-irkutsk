@@ -630,83 +630,15 @@
 
         footer { text-align: center; padding: 25px; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; }
 
-        /* Чат-виджет (справа) */
-        .chat-widget {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
-        }
-        .chat-button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #ffe484;
-            color: #764ba2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
-        }
-        .chat-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
-        }
-        .chat-window {
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            width: 320px;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
-            overflow: hidden;
-            display: none;
-            flex-direction: column;
-            color: #333;
-        }
-        .chat-window.open { display: flex; }
-        .chat-header {
-            background: #764ba2;
-            padding: 16px;
-            color: #fff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 600;
-        }
-        .close-chat {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        .chat-body { padding: 25px 20px; text-align: center; }
-        .chat-body p { margin-bottom: 20px; font-size: 1rem; color: #555; }
-        .telegram-link {
-            display: inline-block;
-            background: #27a7e7;
-            color: #fff;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: background 0.3s;
-        }
-        .telegram-link:hover { background: #1c8cd4; }
+        /* ===== ЧАТ-ВИДЖЕТ УДАЛЁН ===== */
+        /* Стили для .chat-widget, .chat-button, .chat-window удалены */
 
-        /* ===== МОБИЛЬНАЯ ВЕРСИЯ (ТОЛЬКО ТЕЛЕФОН В ШАПКЕ) ===== */
+        /* Мобильная версия */
         @media (max-width: 768px) {
             .container { padding: 0 15px; }
             .header-inner { flex-direction: row; flex-wrap: wrap; justify-content: space-between; align-items: center; }
             .burger { display: flex; }
             
-            /* Скрываем почту и телеграм в шапке на мобильных */
             .header-email, .header-telegram { display: none; }
             .header-phone {
                 order: 2;
@@ -750,8 +682,6 @@
             .service-category { padding: 20px; }
             .service-list { grid-template-columns: 1fr; }
             .reviews-grid { grid-template-columns: 1fr; }
-            .chat-widget { bottom: 20px; right: 20px; }
-            .chat-window { width: 280px; }
 
             .map-wrapper iframe { height: 250px; }
             .share-btn { width: 50px; height: 50px; font-size: 1.6rem; }
@@ -945,7 +875,7 @@
             </div>
         </section>
 
-        <!-- Галерея с вашими фото (работает через thumbnail) -->
+        <!-- Галерея с вашими фото -->
         <section id="gallery" class="gallery-section" data-aos="fade-up">
             <div class="text-center">
                 <p class="section-subtitle">Наши работы</p>
@@ -1165,21 +1095,6 @@
         <a href="#contacts"><i class="ri-phone-line"></i> Заказать звонок</a>
     </div>
 
-    <!-- Чат-виджет -->
-    <div class="chat-widget">
-        <button class="chat-button" id="chatToggle" title="Написать нам"><i class="ri-chat-3-line"></i></button>
-        <div class="chat-window" id="chatWindow">
-            <div class="chat-header">
-                <span>Чат с мастером</span>
-                <button class="close-chat" id="closeChat">&times;</button>
-            </div>
-            <div class="chat-body">
-                <p>Напишите нам в Telegram — отвечаем быстро!</p>
-                <a href="https://t.me/ataman1500" target="_blank" class="telegram-link"><i class="ri-telegram-line"></i> Открыть чат в Telegram</a>
-            </div>
-        </div>
-    </div>
-
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({
@@ -1233,14 +1148,8 @@
             });
         });
 
-        const chatToggle = document.getElementById('chatToggle');
-        const chatWindow = document.getElementById('chatWindow');
-        const closeChat = document.getElementById('closeChat');
-        chatToggle.addEventListener('click', () => { chatWindow.classList.toggle('open'); });
-        closeChat.addEventListener('click', () => { chatWindow.classList.remove('open'); });
-        document.addEventListener('click', (e) => {
-            if (!e.target.closest('.chat-widget')) chatWindow.classList.remove('open');
-        });
+        // ===== ЧАТ-ВИДЖЕТ УДАЛЁН =====
+        // Удалены все обработчики для chatToggle, chatWindow, closeChat
 
         // Формы
         const forms = [
