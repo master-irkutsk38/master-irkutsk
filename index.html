@@ -10,6 +10,32 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ваш-сайт.ru/">
     <link rel="canonical" href="https://ваш-сайт.ru/">
+
+    <!-- JSON-LD микроразметка -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "Мастер+",
+        "image": "https://ваш-сайт.ru/logo.png",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Иркутск",
+            "addressCountry": "RU"
+        },
+        "telephone": "+79027678881",
+        "email": "master-irkutsk38@yandex.ru",
+        "openingHours": "Mo-Su 08:00-22:00",
+        "priceRange": "от 500 ₽",
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5",
+            "reviewCount": "18"
+        },
+        "serviceType": ["Муж на час", "Электрик", "Сантехник", "Сборка мебели"]
+    }
+    </script>
+
     <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <style>
@@ -22,26 +48,65 @@
             color: #ffffff;
             line-height: 1.6;
             overflow-x: hidden;
+            position: relative;
         }
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(255,228,132,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(255,255,255,0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .container, header, footer { position: relative; z-index: 1; }
         .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
         .section-title { font-size: 2.4rem; font-weight: 700; margin-bottom: 15px; color: #fff; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
         .section-subtitle { color: #ffe484; font-weight: 600; text-transform: uppercase; letter-spacing: 4px; margin-bottom: 10px; font-size: 0.9rem; }
         .text-center { text-align: center; margin-bottom: 40px; }
+
         .btn {
             display: inline-block; padding: 14px 35px; border-radius: 50px; text-decoration: none;
             font-weight: 600; font-size: 1rem; transition: all 0.4s ease; cursor: pointer; border: none;
             text-align: center; position: relative; overflow: hidden; z-index: 1;
         }
-        .btn-primary { background: #ffffff; color: #764ba2; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
-        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.4); background: #f8f9fa; }
-        .btn-outline { background: transparent; border: 2px solid #ffffff; color: #ffffff; }
-        .btn-outline:hover { background: #ffffff; color: #764ba2; }
+        .btn-primary {
+            background: #ffffff;
+            color: #764ba2;
+            box-shadow: 0 4px 20px rgba(255,255,255,0.3);
+        }
+        .btn-primary:hover {
+            box-shadow: 0 8px 40px rgba(255,255,255,0.5), 0 0 20px rgba(255,228,132,0.3);
+            transform: translateY(-3px) scale(1.02);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255,255,255,0.6);
+            color: #ffffff;
+        }
+        .btn-outline:hover {
+            background: #ffe484;
+            color: #764ba2;
+            border-color: #ffe484;
+            transform: translateY(-3px);
+        }
         @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(255,255,255,0.7); } 70% { box-shadow: 0 0 0 15px rgba(255,255,255,0); } 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0); } }
         .pulse { animation: pulse 2s infinite; }
+
         header {
-            padding: 15px 0; background: rgba(255,255,255,0.15); backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.2);
-            position: sticky; top: 0; z-index: 1000;
+            padding: 15px 0;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background 0.3s, box-shadow 0.3s;
+        }
+        header.scrolled {
+            background: rgba(118, 75, 162, 0.85);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
         }
         .header-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
         .logo { font-size: 1.8rem; font-weight: 800; color: #fff; text-shadow: 0 2px 5px rgba(0,0,0,0.2); text-decoration: none; }
@@ -58,12 +123,14 @@
         .header-phone a, .header-email a, .header-telegram a { text-decoration: none; font-weight: 600; transition: 0.3s; display: flex; align-items: center; gap: 6px; color: #fff; font-size: 0.95rem; }
         .header-phone a i, .header-email a i, .header-telegram a i { font-size: 1.2rem; color: #ffe484; }
         .header-phone a:hover, .header-email a:hover, .header-telegram a:hover { color: #ffe484; }
+
         .hero { padding: 60px 0; display: flex; align-items: center; flex-wrap: wrap; }
         .hero-content { flex: 1; min-width: 260px; }
         .hero-content h1 { font-size: 2.8rem; font-weight: 800; line-height: 1.15; margin-bottom: 20px; color: #fff; text-shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .hero-content p { font-size: 1.15rem; color: rgba(255,255,255,0.9); margin-bottom: 25px; }
         .badge { display: inline-flex; align-items: center; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); color: #fff; padding: 6px 18px; border-radius: 50px; margin-bottom: 18px; font-weight: 500; font-size: 0.9rem; border: 1px solid rgba(255,255,255,0.3); }
         .badge i { margin-right: 8px; color: #ffe484; }
+
         .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 25px; padding: 60px 0; margin: 30px 0; }
         .feature-item { text-align: center; padding: 25px 15px; border-radius: 24px; background: rgba(255,255,255,0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.25); transition: all 0.4s ease; }
         .feature-item:hover { transform: translateY(-8px); background: rgba(255,255,255,0.25); box-shadow: 0 20px 30px rgba(0,0,0,0.2); }
@@ -71,21 +138,344 @@
         .feature-item:hover .feature-icon { transform: scale(1.15) rotate(5deg); }
         .feature-item h3 { color: #fff; margin-bottom: 8px; font-size: 1.1rem; }
         .feature-item p { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+
+        /* Услуги */
         .services-section { padding: 60px 0; }
-        .service-category { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 24px; padding: 30px; margin-bottom: 30px; border: 1px solid rgba(255,255,255,0.2); transition: 0.3s; }
-        .service-category:hover { background: rgba(255,255,255,0.2); }
+        .service-category {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 32px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-category::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border-radius: 34px;
+            background: linear-gradient(135deg, #ffe484, #764ba2, #ffe484);
+            background-size: 300% 300%;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s;
+            animation: gradientMove 4s ease infinite;
+        }
+        .service-category:hover::before { opacity: 1; }
+        @keyframes gradientMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .service-category:hover { transform: translateY(-4px); }
         .service-category h3 { font-size: 1.6rem; color: #fff; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
         .service-category h3 i { color: #ffe484; font-size: 2rem; }
         .subcategory { margin-bottom: 15px; }
         .subcategory h4 { font-size: 1.2rem; color: #ffe484; margin-bottom: 10px; }
-        .service-list { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px; }
-        .service-list li { padding: 6px 0; color: rgba(255,255,255,0.9); display: flex; align-items: baseline; gap: 8px; }
-        .service-list li::before { content: "•"; color: #ffe484; font-weight: bold; }
+        .service-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 6px;
+        }
+        .service-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 0;
+            color: rgba(255,255,255,0.95);
+        }
+        .service-list li i {
+            font-size: 1.2rem;
+            color: #ffe484;
+            flex-shrink: 0;
+        }
+
+        /* Калькулятор */
+        .calculator-section { padding: 60px 0; }
+        .calc-form {
+            max-width: 600px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(16px);
+            padding: 30px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .calc-form .form-group { margin-bottom: 20px; }
+        .calc-form label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .calc-form select, .calc-form input[type="number"] {
+            width: 100%;
+            padding: 14px 18px;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 1rem;
+            transition: 0.3s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        .calc-form select option { color: #333; background: #fff; }
+        .calc-form select:focus, .calc-form input:focus {
+            outline: none;
+            border-color: #ffe484;
+            background: rgba(255,255,255,0.15);
+        }
+        .calc-result {
+            margin-top: 20px;
+            padding: 20px;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .calc-result span { color: #ffe484; }
+
+        /* Счётчик */
+        .counter-section { padding: 40px 0; }
+        .counter-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+        .counter-item .counter-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #ffe484;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        .counter-item .counter-label {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.8);
+            margin-top: 5px;
+        }
+
+        /* Галерея */
+        .gallery-section { padding: 60px 0; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.3s;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .gallery-item:hover { transform: scale(1.02); }
+        .gallery-item img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+            transition: 0.3s;
+        }
+        .gallery-item:hover img { filter: brightness(1.1); }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: 0.3s;
+        }
+        .lightbox-close:hover { transform: rotate(90deg); }
+
+        /* FAQ */
+        .faq-section { padding: 60px 0; }
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .faq-item {
+            background: rgba(255,255,255,0.06);
+            border-radius: 16px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .faq-item:hover { background: rgba(255,255,255,0.1); }
+        .faq-question {
+            padding: 18px 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+        }
+        .faq-question i { transition: 0.3s; }
+        .faq-item.open .faq-question i { transform: rotate(180deg); }
+        .faq-answer {
+            padding: 0 25px 18px;
+            color: rgba(255,255,255,0.85);
+            display: none;
+        }
+        .faq-item.open .faq-answer { display: block; }
+
+        /* Попап */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            z-index: 10001;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .popup-overlay.open { display: flex; }
+        .popup-content {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            max-width: 480px;
+            width: 100%;
+            padding: 40px 30px;
+            border-radius: 30px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            position: relative;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .popup-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        .popup-content h2 { margin-bottom: 10px; }
+        .popup-content p { margin-bottom: 20px; color: rgba(255,255,255,0.8); }
+
+        /* Плавающие мессенджеры (слева) */
+        .floating-messengers {
+            position: fixed;
+            left: 20px;
+            bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 9998;
+        }
+        .floating-messengers a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.8rem;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        .floating-messengers a:hover { transform: scale(1.1); }
+        .floating-messengers a.wa:hover { background: #25d366; border-color: #25d366; }
+        .floating-messengers a.tg:hover { background: #27a7e7; border-color: #27a7e7; }
+
+        /* Кнопка наверх */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: #ffe484;
+            color: #764ba2;
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            cursor: pointer;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: 0.3s;
+        }
+        .back-to-top.visible { opacity: 1; visibility: visible; }
+        .back-to-top:hover { transform: translateY(-5px); background: #fff; }
+
+        /* Фиксированная кнопка заказа (мобильные) */
+        .fixed-order-btn {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 12px 20px;
+            background: rgba(118, 75, 162, 0.95);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            z-index: 9997;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+        .fixed-order-btn a {
+            display: inline-block;
+            width: 100%;
+            max-width: 300px;
+            padding: 14px;
+            border-radius: 50px;
+            background: #ffe484;
+            color: #764ba2;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .fixed-order-btn a:hover { background: #fff; }
+
+        /* Почему мы */
         .why-us { padding: 60px 0; margin: 40px 0; }
         .why-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; }
         .why-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 20px; padding: 25px 20px; border: 1px solid rgba(255,255,255,0.2); text-align: center; transition: 0.3s; }
         .why-card:hover { background: rgba(255,255,255,0.2); transform: translateY(-5px); }
         .why-card i { font-size: 2.5rem; color: #ffe484; margin-bottom: 15px; }
+
+        /* Отзывы */
         .reviews { padding: 60px 0; }
         .reviews-grid {
             display: grid;
@@ -94,42 +484,158 @@
             margin-top: 30px;
         }
         @media (min-width: 900px) {
-            .reviews-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .reviews-grid { grid-template-columns: repeat(3, 1fr); }
         }
-        .review-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border-radius: 20px; padding: 25px 20px; border: 1px solid rgba(255,255,255,0.2); transition: 0.3s; }
-        .review-card:hover { background: rgba(255,255,255,0.2); transform: scale(1.02); }
+        .review-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 25px 20px;
+            border: 1px solid rgba(255,255,255,0.15);
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        }
+        .review-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.2);
+            border-color: #ffe484;
+        }
         .review-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
-        .review-avatar { width: 45px; height: 45px; border-radius: 50%; background: #ffe484; color: #764ba2; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.2rem; }
+        .review-avatar {
+            width: 45px; height: 45px; border-radius: 50%;
+            background: linear-gradient(135deg, #ffe484, #f5576c);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
         .review-name { font-weight: 600; color: #fff; }
         .review-stars { color: #ffe484; margin-bottom: 10px; }
         .review-text { color: rgba(255,255,255,0.9); font-style: italic; }
+
+        /* Форма отзыва */
         .review-form-section { padding: 60px 0; }
         .review-form { background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border-radius: 24px; padding: 40px 30px; border: 1px solid rgba(255,255,255,0.25); max-width: 600px; margin: 0 auto; }
         .form-group { margin-bottom: 20px; }
         .form-group label { display: block; margin-bottom: 8px; font-weight: 500; color: #fff; }
-        .form-group input, .form-group textarea { width: 100%; padding: 14px 18px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.3); background: rgba(255,255,255,0.1); color: #fff; font-size: 1rem; font-family: inherit; transition: 0.3s; }
-        .form-group input:focus, .form-group textarea:focus { outline: none; border-color: #ffe484; background: rgba(255,255,255,0.2); }
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%; padding: 14px 18px; border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.25);
+            background: rgba(255,255,255,0.08);
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+            outline: none;
+            border-color: #ffe484;
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 0 20px rgba(255,228,132,0.2);
+        }
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: rgba(255,255,255,0.5);
+        }
         .form-group textarea { min-height: 120px; resize: vertical; }
         .stars { display: flex; gap: 8px; flex-direction: row-reverse; justify-content: flex-end; }
         .stars input { display: none; }
         .stars label { font-size: 1.8rem; color: rgba(255,255,255,0.3); cursor: pointer; transition: color 0.2s; }
         .stars input:checked ~ label, .stars label:hover, .stars label:hover ~ label { color: #ffe484; }
         .submit-btn { width: 100%; margin-top: 15px; }
-        #form-success { display: none; text-align: center; margin-top: 20px; color: #ffe484; font-weight: 600; }
-        .contact-section { background: rgba(255,255,255,0.2); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255,255,255,0.4); border-radius: 30px; padding: 40px 25px; text-align: center; margin: 50px 0; }
-        .big-phone { font-size: 2.4rem; font-weight: 800; color: #ffe484; text-decoration: none; display: block; margin: 20px 0 10px; }
+        #form-success, #calc-success { display: none; text-align: center; margin-top: 20px; color: #ffe484; font-weight: 600; }
+
+        /* Контакты */
+        .contact-section {
+            background: rgba(255,255,255,0.08);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 40px;
+            padding: 50px 30px;
+            text-align: center;
+            margin: 50px 0 30px 0;
+        }
+        .big-phone {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(to right, #ffe484, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+            display: block;
+            margin: 20px 0 10px;
+        }
         .email-link { font-size: 1.1rem; color: rgba(255,255,255,0.9); text-decoration: none; border-bottom: 1px dashed #ffe484; transition: 0.3s; word-break: break-all; }
         .email-link:hover { color: #ffe484; }
+
+        /* Карта */
+        .map-section { padding: 0 0 50px 0; }
+        .map-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 30px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+            border: 1px solid rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            padding: 10px;
+        }
+        .map-wrapper iframe {
+            display: block;
+            width: 100%;
+            height: 400px;
+            border-radius: 20px;
+            border: none;
+        }
+
+        /* Поделиться */
+        .share-section { padding: 30px 0 20px; }
+        .share-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .share-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            font-size: 2rem;
+            color: #fff;
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+        }
+        .share-btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        .share-btn.vk:hover { background: #4a76a8; border-color: #4a76a8; }
+        .share-btn.tg:hover { background: #27a7e7; border-color: #27a7e7; }
+        .share-btn.wa:hover { background: #25d366; border-color: #25d366; }
+        .share-btn.max:hover { background: #ff6b6b; border-color: #ff6b6b; }
+        .share-btn.ig:hover { background: #e4405f; border-color: #e4405f; }
+
         footer { text-align: center; padding: 25px; color: rgba(255,255,255,0.7); border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.85rem; }
 
-        /* Чат-виджет */
+        /* Чат-виджет (справа) */
         .chat-widget {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            z-index: 999;
+            z-index: 9999;
         }
         .chat-button {
             width: 60px;
@@ -163,9 +669,7 @@
             flex-direction: column;
             color: #333;
         }
-        .chat-window.open {
-            display: flex;
-        }
+        .chat-window.open { display: flex; }
         .chat-header {
             background: #764ba2;
             padding: 16px;
@@ -182,15 +686,8 @@
             font-size: 1.5rem;
             cursor: pointer;
         }
-        .chat-body {
-            padding: 25px 20px;
-            text-align: center;
-        }
-        .chat-body p {
-            margin-bottom: 20px;
-            font-size: 1rem;
-            color: #555;
-        }
+        .chat-body { padding: 25px 20px; text-align: center; }
+        .chat-body p { margin-bottom: 20px; font-size: 1rem; color: #555; }
         .telegram-link {
             display: inline-block;
             background: #27a7e7;
@@ -201,9 +698,9 @@
             font-weight: 600;
             transition: background 0.3s;
         }
-        .telegram-link:hover {
-            background: #1c8cd4;
-        }
+        .telegram-link:hover { background: #1c8cd4; }
+
+        /* Адаптивность */
         @media (max-width: 768px) {
             .container { padding: 0 15px; }
             .header-inner { flex-direction: row; flex-wrap: wrap; justify-content: space-between; }
@@ -215,7 +712,7 @@
             .hero-content h1 { font-size: 2.2rem; }
             .btn { padding: 12px 25px; font-size: 0.9rem; }
             .section-title { font-size: 1.9rem; }
-            .big-phone { font-size: 2rem; }
+            .big-phone { font-size: 2.5rem; }
             .contact-section { padding: 30px 15px; }
             .hero { padding: 40px 0; }
             .features { gap: 20px; padding: 40px 0; }
@@ -226,12 +723,28 @@
             .reviews-grid { grid-template-columns: 1fr; }
             .chat-widget { bottom: 20px; right: 20px; }
             .chat-window { width: 280px; }
+
+            .map-wrapper iframe { height: 250px; }
+            .share-btn { width: 50px; height: 50px; font-size: 1.6rem; }
+            .share-buttons { gap: 15px; }
+
+            .fixed-order-btn { display: block; }
+            .floating-messengers { left: 10px; bottom: 80px; }
+            .floating-messengers a { width: 44px; height: 44px; font-size: 1.5rem; }
+            .calc-form { padding: 20px; }
+            .counter-item .counter-number { font-size: 2.5rem; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; }
+            .gallery-item img { height: 160px; }
+            .popup-content { padding: 30px 20px; }
         }
         @media (max-width: 400px) {
             .hero-content h1 { font-size: 1.9rem; }
             .btn { width: 100%; margin-bottom: 10px; }
             .logo { font-size: 1.6rem; }
             .section-title { font-size: 1.7rem; }
+            .big-phone { font-size: 2rem; }
+            .map-wrapper iframe { height: 200px; }
+            .gallery-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -246,33 +759,36 @@
                 <ul class="nav-links">
                     <li><a href="#home" class="active">Главная</a></li>
                     <li><a href="#services">Услуги</a></li>
-                    <li><a href="#why">Почему мы</a></li>
+                    <li><a href="#calculator">Калькулятор</a></li>
+                    <li><a href="#gallery">Галерея</a></li>
+                    <li><a href="#faq">FAQ</a></li>
                     <li><a href="#reviews">Отзывы</a></li>
                     <li><a href="#contacts">Контакты</a></li>
-                    <li><a href="#leave-review">Оставить отзыв</a></li>
                 </ul>
             </nav>
             <div class="header-contacts">
-                <div class="header-phone"><a href="tel:+79246172221"><i class="ri-smartphone-line"></i> 8 (924) 617-22-21</a></div>
+                <div class="header-phone"><a href="tel:+79027678881"><i class="ri-smartphone-line"></i> 8 (902) 767-88-81</a></div>
                 <div class="header-telegram"><a href="https://t.me/ataman1500" target="_blank"><i class="ri-telegram-line"></i> Telegram</a></div>
-                <div class="header-email"><a href="mailto:andrejarcev87344@gmail.com"><i class="ri-mail-send-line"></i> andrejarcev87344@gmail.com</a></div>
+                <div class="header-email"><a href="mailto:master-irkutsk38@yandex.ru"><i class="ri-mail-send-line"></i> master-irkutsk38@yandex.ru</a></div>
             </div>
         </div>
     </header>
 
     <main class="container">
+        <!-- Герой -->
         <section id="home" class="hero">
             <div class="hero-content" data-aos="fade-right">
                 <div class="badge"><i class="ri-verified-badge-line"></i> Гарантия до 12 месяцев</div>
                 <h1>Муж на час, Электрик, Сантехник в Иркутске</h1>
                 <p>Ежедневно сталкиваясь с мелкими бытовыми проблемами, зачастую доверить дело профессионалам бывает быстрее и дешевле. У мастера всегда в наличии все необходимые инструменты, а самое главное — это знание и опыт.</p>
                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                    <a href="#services" class="btn btn-primary">Смотреть услуги</a>
-                    <a href="tel:+79246172221" class="btn btn-outline pulse"><i class="ri-phone-line"></i> Экстренный вызов</a>
+                    <a href="#calculator" class="btn btn-primary">Рассчитать стоимость</a>
+                    <a href="tel:+79027678881" class="btn btn-outline pulse"><i class="ri-phone-line"></i> Экстренный вызов</a>
                 </div>
             </div>
         </section>
 
+        <!-- Преимущества -->
         <div class="features">
             <div class="feature-item" data-aos="zoom-in-up" data-aos-delay="100"><div class="feature-icon"><i class="ri-speed-up-line"></i></div><h3>Приезд от 30 минут</h3><p>По всему Иркутску</p></div>
             <div class="feature-item" data-aos="zoom-in-up" data-aos-delay="200"><div class="feature-icon"><i class="ri-tools-fill"></i></div><h3>Профессиональный инструмент</h3><p>Всё с собой</p></div>
@@ -280,6 +796,7 @@
             <div class="feature-item" data-aos="zoom-in-up" data-aos-delay="400"><div class="feature-icon"><i class="ri-user-star-line"></i></div><h3>Опытные мастера</h3><p>Вежливые, трезвые</p></div>
         </div>
 
+        <!-- Услуги (без акции) -->
         <section id="services" class="services-section">
             <div class="text-center" data-aos="fade-up">
                 <p class="section-subtitle">Что мы умеем</p>
@@ -288,42 +805,42 @@
             <div class="service-category" data-aos="fade-up">
                 <h3><i class="ri-hammer-line"></i> Мастер на час</h3>
                 <ul class="service-list">
-                    <li>Подключение бытовой техники</li>
-                    <li>Установка телевизора на стену (ТВ кронштейн)</li>
-                    <li>Установка карнизов</li>
-                    <li>Перестановка мебели в квартире</li>
-                    <li>Разборка и сборка мебели</li>
-                    <li>Подвес шкафчиков, полочек или зеркал</li>
-                    <li>Бурение отверстий различного вида</li>
-                    <li>Ремонт межкомнатной двери</li>
-                    <li>Установка плинтуса</li>
-                    <li>Установка, замена межкомнатных дверей</li>
+                    <li><i class="ri-check-line"></i> Подключение бытовой техники</li>
+                    <li><i class="ri-check-line"></i> Установка телевизора на стену (ТВ кронштейн)</li>
+                    <li><i class="ri-check-line"></i> Установка карнизов</li>
+                    <li><i class="ri-check-line"></i> Перестановка мебели в квартире</li>
+                    <li><i class="ri-check-line"></i> Разборка и сборка мебели</li>
+                    <li><i class="ri-check-line"></i> Подвес шкафчиков, полочек или зеркал</li>
+                    <li><i class="ri-check-line"></i> Бурение отверстий различного вида</li>
+                    <li><i class="ri-check-line"></i> Ремонт межкомнатной двери</li>
+                    <li><i class="ri-check-line"></i> Установка плинтуса</li>
+                    <li><i class="ri-check-line"></i> Установка, замена межкомнатных дверей</li>
                 </ul>
             </div>
             <div class="service-category" data-aos="fade-up" data-aos-delay="100">
                 <h3><i class="ri-bolt-line"></i> Услуги электрика</h3>
                 <ul class="service-list">
-                    <li>Ремонт и установка розеток, выключателей</li>
-                    <li>Установка и подключение светильников, люстр</li>
-                    <li>Работы в электрощите и установка счетчика</li>
-                    <li>Штробление стен и укладка кабеля</li>
-                    <li>Монтаж теплого пола и регулятора</li>
-                    <li>Прокладка кабеля</li>
-                    <li>Перенос розеток и выключателей</li>
-                    <li>Устранение короткого замыкания и прочие электромонтажные работы</li>
+                    <li><i class="ri-check-line"></i> Ремонт и установка розеток, выключателей</li>
+                    <li><i class="ri-check-line"></i> Установка и подключение светильников, люстр</li>
+                    <li><i class="ri-check-line"></i> Работы в электрощите и установка счетчика</li>
+                    <li><i class="ri-check-line"></i> Штробление стен и укладка кабеля</li>
+                    <li><i class="ri-check-line"></i> Монтаж теплого пола и регулятора</li>
+                    <li><i class="ri-check-line"></i> Прокладка кабеля</li>
+                    <li><i class="ri-check-line"></i> Перенос розеток и выключателей</li>
+                    <li><i class="ri-check-line"></i> Устранение короткого замыкания и прочие электромонтажные работы</li>
                 </ul>
             </div>
             <div class="service-category" data-aos="fade-up" data-aos-delay="200">
                 <h3><i class="ri-drop-line"></i> Услуги сантехника</h3>
                 <ul class="service-list">
-                    <li>Устранение засора и течи</li>
-                    <li>Установка и замена ванны, унитаза, смесителя</li>
-                    <li>Установка и ремонт раковин в ванной</li>
-                    <li>Установка и ремонт моек на кухне</li>
-                    <li>Установка и подключение стиральной машины, водонагревателя</li>
-                    <li>Установка душевой кабины, герметизация</li>
-                    <li>Установка и замена батарей отопления, полотенцесушителя</li>
-                    <li>Замена труб подачи воды и канализации</li>
+                    <li><i class="ri-check-line"></i> Устранение засора и течи</li>
+                    <li><i class="ri-check-line"></i> Установка и замена ванны, унитаза, смесителя</li>
+                    <li><i class="ri-check-line"></i> Установка и ремонт раковин в ванной</li>
+                    <li><i class="ri-check-line"></i> Установка и ремонт моек на кухне</li>
+                    <li><i class="ri-check-line"></i> Установка и подключение стиральной машины, водонагревателя</li>
+                    <li><i class="ri-check-line"></i> Установка душевой кабины, герметизация</li>
+                    <li><i class="ri-check-line"></i> Установка и замена батарей отопления, полотенцесушителя</li>
+                    <li><i class="ri-check-line"></i> Замена труб подачи воды и канализации</li>
                 </ul>
             </div>
             <div class="service-category" data-aos="fade-up" data-aos-delay="300">
@@ -331,41 +848,158 @@
                 <div class="subcategory">
                     <h4>По назначению</h4>
                     <ul class="service-list">
-                        <li>Сборка детской мебели (двуспальные кровати, шкафы, кровати, столы, стулья и кресла)</li>
-                        <li>Сборка мебели для спальни (кроватей, спальных гарнитуров, диванов, тумб, комодов)</li>
-                        <li>Сборка шкафов (распашных, шкафов-купе, гардеробных, антресолей, прихожих)</li>
-                        <li>Сборка офисной мебели</li>
-                        <li>Сборка торговой мебели</li>
+                        <li><i class="ri-check-line"></i> Сборка детской мебели (двуспальные кровати, шкафы, кровати, столы, стулья и кресла)</li>
+                        <li><i class="ri-check-line"></i> Сборка мебели для спальни (кроватей, спальных гарнитуров, диванов, тумб, комодов)</li>
+                        <li><i class="ri-check-line"></i> Сборка шкафов (распашных, шкафов-купе, гардеробных, антресолей, прихожих)</li>
+                        <li><i class="ri-check-line"></i> Сборка офисной мебели</li>
+                        <li><i class="ri-check-line"></i> Сборка торговой мебели</li>
                     </ul>
                 </div>
                 <div class="subcategory">
                     <h4>По типу</h4>
                     <ul class="service-list">
-                        <li>Сборка корпусной мебели</li>
-                        <li>Сборка встроенной мебели</li>
-                        <li>Сборка мягкой мебели</li>
-                        <li>Сборка офисной мебели</li>
-                        <li>Сборка производственной мебели (стеллажи, шкафы)</li>
+                        <li><i class="ri-check-line"></i> Сборка корпусной мебели</li>
+                        <li><i class="ri-check-line"></i> Сборка встроенной мебели</li>
+                        <li><i class="ri-check-line"></i> Сборка мягкой мебели</li>
+                        <li><i class="ri-check-line"></i> Сборка офисной мебели</li>
+                        <li><i class="ri-check-line"></i> Сборка производственной мебели (стеллажи, шкафы)</li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <section id="why" class="why-us">
-            <div class="text-center" data-aos="fade-up">
-                <p class="section-subtitle">Наши сильные стороны</p>
-                <h2 class="section-title">Почему выбирают именно нас</h2>
+        <!-- Калькулятор -->
+        <section id="calculator" class="calculator-section" data-aos="fade-up">
+            <div class="text-center">
+                <p class="section-subtitle">Узнайте цену сразу</p>
+                <h2 class="section-title">Калькулятор стоимости</h2>
             </div>
-            <div class="why-grid">
-                <div class="why-card" data-aos="zoom-in" data-aos-delay="100"><i class="ri-time-line"></i><h3>Приезжаем за 30 минут</h3><p>Оперативно выезжаем по Иркутску в удобное для вас время.</p></div>
-                <div class="why-card" data-aos="zoom-in" data-aos-delay="200"><i class="ri-shield-check-line"></i><h3>Гарантия до 12 месяцев</h3><p>Если что-то пойдёт не так — переделаем за свой счёт.</p></div>
-                <div class="why-card" data-aos="zoom-in" data-aos-delay="300"><i class="ri-user-3-line"></i><h3>Опытные и трезвые мастера</h3><p>Стаж от 5 лет, без вредных привычек.</p></div>
-                <div class="why-card" data-aos="zoom-in" data-aos-delay="400"><i class="ri-price-tag-3-line"></i><h3>Прозрачные цены</h3><p>Точная стоимость до начала работ.</p></div>
-                <div class="why-card" data-aos="zoom-in" data-aos-delay="500"><i class="ri-tools-line"></i><h3>Профессиональный инструмент</h3><p>Полная экипировка: инструмент, стремянки, диагностика.</p></div>
-                <div class="why-card" data-aos="zoom-in" data-aos-delay="600"><i class="ri-lock-2-line"></i><h3>Безопасность и аккуратность</h3><p>Спецодежда, бахилы, уборка после работ.</p></div>
+            <div class="calc-form">
+                <form id="calcForm">
+                    <div class="form-group">
+                        <label for="calcService">Выберите услугу</label>
+                        <select id="calcService" required>
+                            <option value="electric">Электрика</option>
+                            <option value="plumbing">Сантехника</option>
+                            <option value="furniture">Сборка мебели</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="calcVolume">Объём работ (кол-во точек/изделий)</label>
+                        <input type="number" id="calcVolume" value="1" min="1" max="20" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary submit-btn">Рассчитать</button>
+                </form>
+                <div class="calc-result" id="calcResult" style="display: none;">
+                    Примерная стоимость: <span id="calcPrice">0</span> ₽
+                </div>
+                <div id="calc-success">Спасибо, мы скоро свяжемся с вами для уточнения!</div>
             </div>
         </section>
 
+        <!-- Счётчик -->
+        <section id="counter" class="counter-section" data-aos="fade-up">
+            <div class="counter-grid">
+                <div class="counter-item">
+                    <div class="counter-number" data-count="120">0</div>
+                    <div class="counter-label">Выполненных заказов</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-count="5">0</div>
+                    <div class="counter-label">Лет на рынке</div>
+                </div>
+                <div class="counter-item">
+                    <div class="counter-number" data-count="100">0</div>
+                    <div class="counter-label">% довольных клиентов</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Галерея с вашими фото -->
+        <section id="gallery" class="gallery-section" data-aos="fade-up">
+            <div class="text-center">
+                <p class="section-subtitle">Наши работы</p>
+                <h2 class="section-title">Фото выполненных проектов</h2>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <div class="gallery-item" data-src="https://drive.google.com/thumbnail?id=1TaQvKrSMa-oatcnb1nXzHjWjGK0vqH3F&sz=w2000">
+                    <img src="https://drive.google.com/thumbnail?id=1TaQvKrSMa-oatcnb1nXzHjWjGK0vqH3F&sz=w800" alt="Работа 1" loading="lazy">
+                </div>
+                <div class="gallery-item" data-src="https://drive.google.com/thumbnail?id=1-urSoWuH-VGLFRpniBopTbf1zKfXUO0j&sz=w2000">
+                    <img src="https://drive.google.com/thumbnail?id=1-urSoWuH-VGLFRpniBopTbf1zKfXUO0j&sz=w800" alt="Работа 2" loading="lazy">
+                </div>
+                <div class="gallery-item" data-src="https://drive.google.com/thumbnail?id=17zvVyDlSJy-FhkNdaOVzxJYZ3cYOmbgL&sz=w2000">
+                    <img src="https://drive.google.com/thumbnail?id=17zvVyDlSJy-FhkNdaOVzxJYZ3cYOmbgL&sz=w800" alt="Работа 3" loading="lazy">
+                </div>
+                <div class="gallery-item" data-src="https://drive.google.com/thumbnail?id=1bkwYAGF2PU3IvYBVysyw-ttrcFmTdEfR&sz=w2000">
+                    <img src="https://drive.google.com/thumbnail?id=1bkwYAGF2PU3IvYBVysyw-ttrcFmTdEfR&sz=w800" alt="Работа 4" loading="lazy">
+                </div>
+                <div class="gallery-item" data-src="https://drive.google.com/thumbnail?id=11MMj-ZtxFimaIQp16Fg5MYZb8D2hGyeh&sz=w2000">
+                    <img src="https://drive.google.com/thumbnail?id=11MMj-ZtxFimaIQp16Fg5MYZb8D2hGyeh&sz=w800" alt="Работа 5" loading="lazy">
+                </div>
+                <div class="gallery-item" data-src="https://drive.google.com/thumbnail?id=1NhnydXt5UZHG-H7dSxUvRaWkeS_eteph&sz=w2000">
+                    <img src="https://drive.google.com/thumbnail?id=1NhnydXt5UZHG-H7dSxUvRaWkeS_eteph&sz=w800" alt="Работа 6" loading="lazy">
+                </div>
+                <div class="gallery-item" data-src="https://drive.google.com/thumbnail?id=1wWxiaIr9g3b6Lzm32BcG-P-lKKLq7fpM&sz=w2000">
+                    <img src="https://drive.google.com/thumbnail?id=1wWxiaIr9g3b6Lzm32BcG-P-lKKLq7fpM&sz=w800" alt="Работа 7" loading="lazy">
+                </div>
+                <div class="gallery-item" data-src="https://drive.google.com/thumbnail?id=1Wkj0SiF_OLMH-vzTV6Nmhg-Hbdu_4tq5&sz=w2000">
+                    <img src="https://drive.google.com/thumbnail?id=1Wkj0SiF_OLMH-vzTV6Nmhg-Hbdu_4tq5&sz=w800" alt="Работа 8" loading="lazy">
+                </div>
+            </div>
+        </section>
+
+        <div class="lightbox" id="lightbox">
+            <button class="lightbox-close" id="lightboxClose">&times;</button>
+            <img id="lightboxImg" src="" alt="Увеличенное фото">
+        </div>
+
+        <!-- FAQ -->
+        <section id="faq" class="faq-section" data-aos="fade-up">
+            <div class="text-center">
+                <p class="section-subtitle">Ответы на вопросы</p>
+                <h2 class="section-title">Часто задаваемые вопросы</h2>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item open">
+                    <div class="faq-question">
+                        <span>Какие гарантии вы даёте?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">Мы предоставляем гарантию до 12 месяцев на все виды работ. В случае проблем – исправим бесплатно.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Сколько времени занимает выезд мастера?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">Мы приезжаем в течение 30–60 минут по Иркутску. Время зависит от загруженности.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Можно ли заказать услугу на выходные?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">Да, мы работаем без выходных с 8:00 до 22:00. Выезд в любое удобное для вас время.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Как оплачивается работа?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">Оплата наличными или переводом на карту после выполнения работ. Цена фиксируется до начала.</div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>Есть ли у вас скидки для пенсионеров?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">Да, мы предоставляем скидку 5% для пенсионеров и студентов при предъявлении удостоверения.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Отзывы -->
         <section id="reviews" class="reviews">
             <div class="text-center" data-aos="fade-up"><p class="section-subtitle">Что говорят клиенты</p><h2 class="section-title">Отзывы</h2></div>
             <div class="reviews-grid">
@@ -378,10 +1012,11 @@
             </div>
         </section>
 
+        <!-- Форма отзыва -->
         <section id="leave-review" class="review-form-section">
             <div class="text-center" data-aos="fade-up"><p class="section-subtitle">Поделитесь впечатлениями</p><h2 class="section-title">Оставить отзыв</h2></div>
             <div class="review-form" data-aos="zoom-in">
-                <form id="reviewForm" action="https://formspree.io/f/ваш_id" method="POST">
+                <form id="reviewForm" action="https://formspree.io/f/xdarnnka" method="POST">
                     <div class="form-group"><label for="name">Ваше имя</label><input type="text" id="name" name="name" placeholder="Иван Иванов" required></div>
                     <div class="form-group"><label>Оценка</label><div class="stars">
                         <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
@@ -397,26 +1032,112 @@
             </div>
         </section>
 
+        <!-- Карта -->
+        <section id="map" class="map-section" data-aos="fade-up">
+            <div class="text-center">
+                <p class="section-subtitle">Мы находимся здесь</p>
+                <h2 class="section-title">Карта проезда</h2>
+            </div>
+            <div class="map-wrapper">
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A6a8c6e9b7c5a6d8f4e9b3c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6&source=constructor" width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div style="text-align: center; margin-top: 15px; color: rgba(255,255,255,0.7); font-size: 0.95rem;">
+                <i class="ri-map-pin-line" style="color: #ffe484;"></i> Иркутск, мы работаем по всему городу
+            </div>
+        </section>
+
+        <!-- Поделиться -->
+        <section id="share" class="share-section" data-aos="fade-up">
+            <div class="text-center">
+                <p class="section-subtitle">Расскажите о нас</p>
+                <h2 class="section-title">Поделиться в соцсетях</h2>
+            </div>
+            <div class="share-buttons">
+                <a href="#" class="share-btn vk" data-share="vk" title="ВКонтакте"><i class="ri-vk-line"></i></a>
+                <a href="#" class="share-btn tg" data-share="tg" title="Telegram"><i class="ri-telegram-line"></i></a>
+                <a href="#" class="share-btn wa" data-share="wa" title="WhatsApp"><i class="ri-whatsapp-line"></i></a>
+                <a href="#" class="share-btn max" data-share="max" title="Max.ru"><i class="ri-global-line"></i></a>
+                <a href="#" class="share-btn ig" data-share="instagram" title="Instagram"><i class="ri-instagram-line"></i></a>
+            </div>
+        </section>
+
+        <!-- Контакты -->
         <section id="contacts" class="contact-section" data-aos="zoom-in">
             <i class="ri-customer-service-2-fill" style="font-size: 3rem; color: #ffe484;"></i>
             <h2>Вызвать мастера сейчас</h2>
             <p style="color: rgba(255,255,255,0.8);">Приедем в течение часа по Иркутску</p>
-            <a href="tel:+79246172221" class="big-phone">8 (924) 617-22-21</a>
-            <a href="mailto:andrejarcev87344@gmail.com" class="email-link">andrejarcev87344@gmail.com</a>
+
+            <form id="orderForm" action="https://formspree.io/f/xdarnnka" method="POST" style="max-width: 500px; margin: 20px auto; text-align: left;">
+                <div class="form-group">
+                    <label for="orderName">Ваше имя</label>
+                    <input type="text" id="orderName" name="name" placeholder="Иван Иванов" required>
+                </div>
+                <div class="form-group">
+                    <label for="orderPhone">Телефон</label>
+                    <input type="tel" id="orderPhone" name="phone" placeholder="+7 (999) 123-45-67" required>
+                </div>
+                <div class="form-group">
+                    <label for="orderService">Что нужно сделать?</label>
+                    <textarea id="orderService" name="service" placeholder="Опишите задачу..." rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn" style="width: 100%;">Отправить заявку</button>
+            </form>
+            <div id="order-success">✅ Заявка отправлена! Мы свяжемся с вами в ближайшее время.</div>
+
+            <a href="tel:+79027678881" class="big-phone">8 (902) 767-88-81</a>
+            <a href="mailto:master-irkutsk38@yandex.ru" class="email-link">master-irkutsk38@yandex.ru</a>
             <div style="display: flex; gap: 15px; justify-content: center; margin-top: 25px; flex-wrap: wrap;">
-                <a href="tel:+79246172221" class="btn btn-primary"><i class="ri-phone-line"></i> Позвонить</a>
+                <a href="tel:+79027678881" class="btn btn-primary"><i class="ri-phone-line"></i> Позвонить</a>
                 <a href="https://t.me/ataman1500" target="_blank" class="btn btn-outline"><i class="ri-telegram-line"></i> Telegram</a>
-                <a href="mailto:andrejarcev87344@gmail.com" class="btn btn-outline"><i class="ri-mail-send-line"></i> Написать</a>
+                <a href="mailto:master-irkutsk38@yandex.ru" class="btn btn-outline"><i class="ri-mail-send-line"></i> Написать</a>
             </div>
         </section>
     </main>
+
     <footer><div class="container"><p>© 2024 Мастер+. Иркутск, работаем с 8:00 до 22:00 без выходных.</p></div></footer>
+
+    <!-- Попап -->
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup-content">
+            <button class="popup-close" id="popupClose">&times;</button>
+            <h2>Не нашли нужную услугу?</h2>
+            <p>Оставьте заявку, и мы подберём решение за 5 минут!</p>
+            <form id="popupForm" action="https://formspree.io/f/xdarnnka" method="POST" style="text-align: left;">
+                <div class="form-group">
+                    <label for="popupName">Ваше имя</label>
+                    <input type="text" id="popupName" name="name" placeholder="Иван Иванов" required>
+                </div>
+                <div class="form-group">
+                    <label for="popupPhone">Телефон</label>
+                    <input type="tel" id="popupPhone" name="phone" placeholder="+7 (999) 123-45-67" required>
+                </div>
+                <div class="form-group">
+                    <label for="popupMessage">Что нужно сделать?</label>
+                    <textarea id="popupMessage" name="message" placeholder="Опишите задачу..." rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary submit-btn" style="width: 100%;">Отправить</button>
+            </form>
+            <div id="popup-success" style="display: none; text-align: center; margin-top: 20px; color: #ffe484; font-weight: 600;">✅ Заявка отправлена!</div>
+        </div>
+    </div>
+
+    <!-- Плавающие мессенджеры -->
+    <div class="floating-messengers">
+        <a href="https://wa.me/79027678881" target="_blank" class="wa" title="WhatsApp"><i class="ri-whatsapp-line"></i></a>
+        <a href="https://t.me/ataman1500" target="_blank" class="tg" title="Telegram"><i class="ri-telegram-line"></i></a>
+    </div>
+
+    <!-- Кнопка наверх -->
+    <button class="back-to-top" id="backToTop" aria-label="Наверх"><i class="ri-arrow-up-line"></i></button>
+
+    <!-- Фиксированная кнопка заказа -->
+    <div class="fixed-order-btn">
+        <a href="#contacts"><i class="ri-phone-line"></i> Заказать звонок</a>
+    </div>
 
     <!-- Чат-виджет -->
     <div class="chat-widget">
-        <button class="chat-button" id="chatToggle" title="Написать нам">
-            <i class="ri-chat-3-line"></i>
-        </button>
+        <button class="chat-button" id="chatToggle" title="Написать нам"><i class="ri-chat-3-line"></i></button>
         <div class="chat-window" id="chatWindow">
             <div class="chat-header">
                 <span>Чат с мастером</span>
@@ -424,18 +1145,28 @@
             </div>
             <div class="chat-body">
                 <p>Напишите нам в Telegram — отвечаем быстро!</p>
-                <a href="https://t.me/ataman1500" target="_blank" class="telegram-link">
-                    <i class="ri-telegram-line"></i> Открыть чат в Telegram
-                </a>
+                <a href="https://t.me/ataman1500" target="_blank" class="telegram-link"><i class="ri-telegram-line"></i> Открыть чат в Telegram</a>
             </div>
         </div>
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        AOS.init({ duration: 800, easing: 'ease-in-out', once: true, offset: 80 });
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 120,
+            delay: 50,
+            mirror: false
+        });
 
-        // Мобильное меню
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
+        });
+
         const burgerBtn = document.getElementById('burgerBtn');
         const navMenu = document.getElementById('navMenu');
         burgerBtn.addEventListener('click', () => {
@@ -450,7 +1181,6 @@
             });
         });
 
-        // Intersection Observer для подсветки активного пункта меню
         const sections = document.querySelectorAll('section[id]');
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -464,7 +1194,6 @@
         }, { rootMargin: '-50% 0px -50% 0px' });
         sections.forEach(section => observer.observe(section));
 
-        // Плавная прокрутка для якорных ссылок
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 const href = this.getAttribute('href');
@@ -474,34 +1203,169 @@
             });
         });
 
-        // Чат-виджет: открытие/закрытие
         const chatToggle = document.getElementById('chatToggle');
         const chatWindow = document.getElementById('chatWindow');
         const closeChat = document.getElementById('closeChat');
-
-        chatToggle.addEventListener('click', () => {
-            chatWindow.classList.toggle('open');
-        });
-        closeChat.addEventListener('click', () => {
-            chatWindow.classList.remove('open');
-        });
-        // Закрытие при клике вне окна
+        chatToggle.addEventListener('click', () => { chatWindow.classList.toggle('open'); });
+        closeChat.addEventListener('click', () => { chatWindow.classList.remove('open'); });
         document.addEventListener('click', (e) => {
-            if (!e.target.closest('.chat-widget')) {
-                chatWindow.classList.remove('open');
-            }
+            if (!e.target.closest('.chat-widget')) chatWindow.classList.remove('open');
         });
 
-        // Форма отзывов
-        const form = document.getElementById('reviewForm');
-        const successDiv = document.getElementById('form-success');
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const response = await fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } });
-            if (response.ok) { form.style.display = 'none'; successDiv.style.display = 'block'; }
-            else { alert('Произошла ошибка. Попробуйте ещё раз или позвоните нам.'); }
+        // Формы
+        const forms = [
+            { id: 'reviewForm', success: 'form-success' },
+            { id: 'orderForm', success: 'order-success' },
+            { id: 'popupForm', success: 'popup-success' }
+        ];
+        forms.forEach(({ id, success }) => {
+            const form = document.getElementById(id);
+            const successDiv = document.getElementById(success);
+            if (!form) return;
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = new FormData(form);
+                try {
+                    const response = await fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                        headers: { 'Accept': 'application/json' }
+                    });
+                    if (response.ok) {
+                        form.style.display = 'none';
+                        successDiv.style.display = 'block';
+                    } else {
+                        alert('Произошла ошибка. Попробуйте ещё раз или позвоните нам.');
+                    }
+                } catch {
+                    alert('Ошибка сети. Проверьте подключение.');
+                }
+            });
         });
+
+        // Калькулятор
+        const calcForm = document.getElementById('calcForm');
+        const calcResult = document.getElementById('calcResult');
+        const calcPrice = document.getElementById('calcPrice');
+        const prices = { electric: 500, plumbing: 600, furniture: 700 };
+        calcForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const service = document.getElementById('calcService').value;
+            const volume = parseInt(document.getElementById('calcVolume').value) || 1;
+            const base = prices[service] || 0;
+            const total = base * volume;
+            calcPrice.textContent = total;
+            calcResult.style.display = 'block';
+        });
+
+        // Галерея и лайтбокс
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxClose = document.getElementById('lightboxClose');
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                const src = this.dataset.src || this.querySelector('img').src;
+                lightboxImg.src = src;
+                lightbox.classList.add('open');
+            });
+        });
+        lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) lightbox.classList.remove('open');
+        });
+
+        // Счётчик
+        const counters = document.querySelectorAll('.counter-number');
+        let counterAnimated = false;
+        function animateCounters() {
+            if (counterAnimated) return;
+            const trigger = document.getElementById('counter');
+            const rect = trigger.getBoundingClientRect();
+            if (rect.top < window.innerHeight - 100) {
+                counterAnimated = true;
+                counters.forEach(counter => {
+                    const target = parseInt(counter.dataset.count);
+                    let current = 0;
+                    const step = Math.ceil(target / 40);
+                    const interval = setInterval(() => {
+                        current += step;
+                        if (current >= target) {
+                            counter.textContent = target + (target === 120 ? '+' : '');
+                            clearInterval(interval);
+                        } else {
+                            counter.textContent = current + (target === 120 ? '+' : '');
+                        }
+                    }, 30);
+                });
+            }
+        }
+        window.addEventListener('scroll', animateCounters);
+        window.addEventListener('load', animateCounters);
+
+        // Кнопка наверх
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 600) backToTop.classList.add('visible');
+            else backToTop.classList.remove('visible');
+        });
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // FAQ
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', function() {
+                const item = this.parentElement;
+                const isOpen = item.classList.contains('open');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+                if (!isOpen) item.classList.add('open');
+            });
+        });
+
+        // Поделиться
+        const shareButtons = document.querySelectorAll('.share-btn');
+        const currentUrl = encodeURIComponent(window.location.href);
+        const currentTitle = encodeURIComponent(document.title);
+        shareButtons.forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                const network = this.dataset.share;
+                let shareUrl = '';
+                switch(network) {
+                    case 'vk':
+                        shareUrl = `https://vk.com/share.php?url=${currentUrl}&title=${currentTitle}`;
+                        break;
+                    case 'tg':
+                        shareUrl = `https://t.me/share/url?url=${currentUrl}&text=${currentTitle}`;
+                        break;
+                    case 'wa':
+                        shareUrl = `https://api.whatsapp.com/send?text=${currentTitle} ${currentUrl}`;
+                        break;
+                    case 'max':
+                        window.open('https://max.ru', '_blank');
+                        return;
+                    case 'instagram':
+                        window.open('https://instagram.com/ваш_аккаунт', '_blank');
+                        return;
+                    default: return;
+                }
+                if (shareUrl) window.open(shareUrl, '_blank', 'width=600,height=400');
+            });
+        });
+
+        // Попап (через 60 секунд)
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupClose = document.getElementById('popupClose');
+        setTimeout(() => {
+            popupOverlay.classList.add('open');
+        }, 60000);
+        popupClose.addEventListener('click', () => popupOverlay.classList.remove('open'));
+        popupOverlay.addEventListener('click', (e) => {
+            if (e.target === popupOverlay) popupOverlay.classList.remove('open');
+        });
+
+        console.log('✅ Все функции загружены! Сайт готов к работе.');
     </script>
 </body>
 </html>
